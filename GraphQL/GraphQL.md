@@ -111,6 +111,22 @@ type Mutation {
 -  opportunity for new abstractions on the frontend
 -  from imperative to declarative data fetching
 
-## Advanced Tutorial- Clients
+## Advanced Tutorial
+
+### Clients
 
 -  GraphQL provides the ability to abstract away a lot of the manual work you'd usually have to do during that process and lets you focus on the real important parts of your app!
+-  A major benefit of GraphQL is that it allows you to fetch and update data in a declarative manner.
+-  Previously we used plain HTTP like fetch in JavaScript to load data from an API, now with GraphQL you can write a query where you declare your data requirements and let the system take care of sending the request and handling the response for you
+   -  This is what a GraphQL client like Apollo or Relay will do.
+
+### Server
+
+- GraphQL is often explained as a frontend-focused API technology because it enables clients to get data in a much nice way than before 
+    - but the API itself is implemented on the server side 
+- GraphQL enables the server developer to focus on describing the data available rather than implementing and optimizing specific endpoints 
+- A query is traversed field by field, executing "resolvers" for each field 
+- Find the resolvers in our server to run for every field, the execution starts at the query type and goes breadth-first 
+    - at the end the execution algorithm puts everything together into the correct shape for the result and returns that 
+- Most GraphQL server implementations will provide "default resolvers" so you don't have to specify a resolver function for every single field 
+
