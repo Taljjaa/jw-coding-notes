@@ -235,5 +235,77 @@ fieldName: (parent, args, context, info) => data;
 -  When you write a GraphQL query you always want to start with the operation keyword(either query or mutation) and its name(like GetLaunches)
 -  What's awesome about GraphQL is that the shape of your query will match the shape of your response
 -  Pagination is a solution to this problem that ensures that the server only sends data in small chunks
-- You can write resolvers for any types in your schema not just queries and mutations, this is what makes GraphQL so flexible 
+-  You can write resolvers for any types in your schema not just queries and mutations, this is what makes GraphQL so flexible
 
+## Authentication
+
+-  The context function of your ApolloServer instance is called with the request object each time a GraphQL operation hits your API, use this request object to read the authorization headers
+-  Authenticate the user within the context function
+-  Once the user is authenticated, attach the user to the object returned from the context function, this allows us to read the user's information from within our data sources and resolvers, so we can authorize whether they can access the data
+
+## Graph Manager
+
+-  Publishing your schema to Apollo Graph Manager unlocks many features necessary for running a graph API in production
+   -  Schema explorer: You can quickly explore all the types and fields in your schema with usage statistics on each field, this metric makes you understand the cost of a field
+   -  Schema history: Allows you to confidently iterate a graph's schema by validating the new schema against field-level usage data from a previous schema
+   -  Performance analytics: Insights into every field, resolver, and operation of your graph's execution
+   -  Client awareness: Report client identity(name and version) to your server for insights on client activity
+
+## Fetch Data with Queries
+
+-  The useQuery hook is one of the most important building blocks of an Apollo app, it's a react hook that fetches a GraphQL query and exposes the result so you can render your UI based on the data it returns
+-  The userQuery hook fetches and loads data from queries to our UI, it exposes error, loading, and data properties through a result object, that help us populate and rende rour component.
+
+# ByteConf GraphQL 2020
+
+-  Arguments reduce multiple API calls
+   -  one of the nice features of GraphQL compared to REST
+-  the json response from GraphQL is going to return exactly what the query asked for (unique feature of GraphQL you can query what you want with no extra data or filtering)
+-  multiple clients can ask for different sets of data from the same GraphQL server
+-  what some fields you might have a ton of data and we don't always want all of that back, for this we can use pagination
+-  use aliases to distinguish between queries with the same field
+
+```
+query MyFirstQuery {
+   firstThree: following (first: 3) {
+      edges {
+         node {
+            <!-- id
+            name
+            bio -->
+            ...userInfo
+         }
+      }
+   }
+   lastThree: following (last: 3) {
+      edges {
+         node {
+            <!-- id
+            name
+            bio -->
+            ...userInfo
+         }
+      }
+   }
+}
+
+fragment userInfo on User {
+   id
+   name
+   bio
+}
+
+```
+
+-  Fragment is GraphQL's reusable unit
+   -  they let you build sets of fields and include them in multiple queries
+-  the ... indicates the use of a fragment
+-  Mutations are used to make changes to the data (create, update, delete data)
+- Serverless computing is a cloud-computing execution model in which the cloud provider runs the server, and dynamically manages the allocation of machine resources 
+   - the idea that we pay for things only as we use them
+- Define the data types and how they are related 
+- Specify entry points for the API
+   - Query and Mutation types 
+- GraphQL Schema Definition Language or construct schema programmatically 
+- Resolver functions are functions that define how to resolve data for GraphQL requests 
+- 
